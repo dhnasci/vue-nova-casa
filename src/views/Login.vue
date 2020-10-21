@@ -17,7 +17,10 @@
                             <v-text-field prepend-icon="mdi-email"
                                 name="email"
                                 label="Email"
-                                type="email"> 
+                                type="email"
+                                v-model.trim = "$v.user.email.$model"
+                                :error-messages="emailErrors"
+                                :success="!$v.user.email.$invalid"> 
                             </v-text-field>
                             <v-text-field prepend-icon="mdi-account-lock"
                                 name="password"
@@ -44,6 +47,7 @@
 </template>
 
 <script>
+import { required, email} from 'vuelidate/lib/validators'
 
 export default {
   name: 'Login', 
@@ -60,8 +64,34 @@ export default {
           return this.isLogin 
           ? { toolbar: 'Login', button: 'Criar Conta'}
           : { toolbar: 'Criar Conta', button: 'Já tenho uma conta'}
-      }
+      },
+      emailErrors(){
+            const errors = []
+            const email =  this.$v.user.email
+            console.log(email)
+           /* if (!email.$dirty) { return errors }
+            !email.required && errors.push('Email é obrigatório!')
+            !email.email && errors.push('Digite um Email válido!') */
+           return errors
+        }
   },
+  validations() {
+      const validations = {
+          user: {
+              email: {
+                  required, 
+                  email
+                },
+          }
+        }
+        if (this.isLogin) {
+              return {validations}
+        }
+        return { user:{
+            ...validations.user,
+        }}
+      },
+
   methods: {
       log() {
           console.log('Vuelidate: ', this.$v)
