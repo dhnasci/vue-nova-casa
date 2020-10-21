@@ -4,10 +4,16 @@
             <v-flex xs12 sm6 md4 lg3>
                 <v-card class="elevation-12">
                     <v-toolbar color="primary" dark>
-                        <v-toolbar-title>Login</v-toolbar-title>
+                        <v-toolbar-title>{{textos.toolbar}}</v-toolbar-title>
                     </v-toolbar>
                     <v-card-text>
                         <v-form>
+                            <v-text-field v-if="!isLogin"
+                             prepend-icon="mdi-login"
+                                name="name"
+                                label="Nome"
+                                type="text"> 
+                            </v-text-field>
                             <v-text-field prepend-icon="mdi-email"
                                 name="email"
                                 label="Email"
@@ -20,11 +26,16 @@
                             </v-text-field>
                             
                         </v-form>
-                        <v-btn block depressed> Criar conta</v-btn>
+                        <v-btn 
+                            block 
+                            depressed
+                            @click="isLogin = !isLogin"> {{textos.button}}</v-btn>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="primary" large> Login </v-btn>
+                        <v-btn 
+                            color="primary" 
+                            large @click="submit()"> {{textos.toolbar}} </v-btn>
                     </v-card-actions>
                 </v-card>
             </v-flex> 
@@ -35,7 +46,31 @@
 <script>
 
 export default {
-  name: 'App'
+  name: 'Login', 
+  data: () => ({
+        isLogin: true,
+        user: {
+            name: '',
+            email: '',
+            password: ''
+        }
+  }),
+  computed: {
+      textos(){
+          return this.isLogin 
+          ? { toolbar: 'Login', button: 'Criar Conta'}
+          : { toolbar: 'Criar Conta', button: 'Já tenho uma conta'}
+      }
+  },
+  methods: {
+      log() {
+          console.log('Vuelidate: ', this.$v)
+      }, 
+      submit() {
+          console.log('Usuário: ', this.user)
+      }
+
+  }
 };
 </script>
 
