@@ -24,7 +24,8 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "vue-template-compiler": "^2.6.11",
-    "vuetify": "^2.3.14"
+    "vuetify": "^2.3.14",
+    "yup": "^0.29.3"
   },
   "eslintConfig": {
     "root": true,
