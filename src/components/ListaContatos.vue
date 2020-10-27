@@ -94,13 +94,14 @@
           
         </v-col>
       </v-row>
-        </v-main>
-      </v-app>
-    </template>
+    </v-main>
+  </v-app>
+</template>
 
 <script>
-  //import { eventBus } from './../main'
+  import axios from 'axios'
 
+  import config from './../config/config'
   import ListaContatosEditar from "./ListaContatosEditar.vue"
   import ListaContatosInfo from "./ListaContatosInfo.vue"
   
@@ -114,11 +115,7 @@ export default {
       return {
         drawer: null,
      
-        contatos:[
-          { id:"1", nome:"Ronaldo Mangi", sexo:"MASCULINO", telefone: "3234-5533", email: "ronaldomangi@mail.com" },
-          { id:"2", nome:"Sonia Rinaldi", sexo:"FEMININO", telefone: "3222-4425", email: "soniar@mail.com" },
-          { id:"3", nome:"Sandro Santos", sexo:"MASCULINO", telefone: "93225-3377", email: "ssantos@mail.com" }
-        ],
+        contatos:[],
         contatoSelecionado: {
            id: 0,
                 nome: '',
@@ -131,29 +128,35 @@ export default {
       }
     },       
     methods:{
-      incluirContrato: function(){
+      incluirContrato(){
         console.log('Incluir Contrato')
         this.editar = true
-        
+
       },
-      selecionar: function(contato){
+      selecionar(contato){
         console.log('selecionado... ' + contato.nome)
         this.contatoSelecionado = contato;
         this.editar = false;
         
       },
-      editarContato: function (contato){
+      editarContato(contato){
         console.log('editar selecionado ...' + contato.nome)
         this.editar = true
         this.contatoSelecionado = contato
       },
-      apagar: function (contato){
+      apagar(contato){
         console.log('apagar...' + contato);
         this.contatos.pop(contato);
       },
-      created: function(){
-        console.log('iniciado...')
+      
+    },
+    created() {
+        console.log('iniciado...' + config.apiURL)
+        axios.get(`${config.apiURL}/contatos`)
+          .then( (response) => {
+            console.log(response)
+            this.contatos = response.data
+          })
       }
-    }
   }
 </script>
