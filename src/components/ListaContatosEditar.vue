@@ -11,30 +11,29 @@
             lazy-validation
         >
             <v-text-field
-            v-model="nome"
+            v-model="contato.nome"
             :counter="20"
             :rules="nameRules"
             label="Nome"
-            required
+            required 
             ></v-text-field>
-
+ 
             <v-text-field
-            v-model="email"
+            v-model="contato.email"
             :rules="emailRules"
             label="E-mail"
             required
             ></v-text-field>
 
             <v-text-field
-            v-model="telefone"
+            v-model="contato.telefone"
             :rules="telefoneRules"
             label="Telefone"
             required
             ></v-text-field>
 
             <v-select
-            v-model="select"
-            item-text="contato.sexo"
+            v-model="contato.sexo"
             :items="items"
             :rules="[v => !!v || 'Sexo é obrigatório']"
             label="Sexo"
@@ -76,37 +75,53 @@
     },
     data: () => ({
       valid: true,
-      nome: '',
+      contato: {
+        nome: '',
+        email: '',
+        sexo: null,
+        telefone: '',
+      },
+      
       nameRules: [
         v => !!v || 'Nome é obrigatório',
         v => (v && v.length <= 20) || 'Nome deve ter menos de 20 caracteres',
       ],
-      email: '',
+      
       emailRules: [
         v => !!v || 'E-mail é obrigatório',
         v => /.+@.+\..+/.test(v) || 'E-mail deve ser válido',
       ],
-      select: null,
+      
       items: [
         'MASCULINO',
         'FEMININO',
       ],
-      telefone: '',
+      
       telefoneRules: [
           v => !!v || 'Telefone é obrigatório',
       ],
     }),
     methods: {
       salvarContato() {
-            // this.$emit('atualizarFilme', this.filmeLocal)
-            this.$refs.form.validate()
-            //eventBus.atualizarContato(this.contatoLocal)
+          this.$refs.form.validate()
+         
+          const formularioSalvo = Object.assign( {}, this.contato)
+          console.log(formularioSalvo) 
         },
       
       reset () {
         this.$refs.form.reset()
       },
     },
+    created: function (){
+      this.contato = this.contatoEditar
+     
+    },
+    watch: {
+      contatoEditar(){
+        this.contato = this.contatoEditar
+      }
+    }
   }
 </script>
 

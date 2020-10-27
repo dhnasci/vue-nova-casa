@@ -17,8 +17,17 @@
 
       <v-toolbar-title>Lista de Contatos</v-toolbar-title>
     </v-app-bar>
-
+    
     <v-main>
+      <v-row justify="center">
+        <v-btn
+            color="primary"
+            class="mr-4"
+            @click="incluirContrato"
+            >
+            Incluir
+            </v-btn>
+      </v-row>
       <v-row align="start">
         <v-col>
           <v-simple-table>
@@ -122,11 +131,16 @@ export default {
       }
     },       
     methods:{
+      incluirContrato: function(){
+        console.log('Incluir Contrato')
+        this.editar = true
+        
+      },
       selecionar: function(contato){
         console.log('selecionado... ' + contato.nome)
         this.contatoSelecionado = contato;
         this.editar = false;
-        //eventBus.selecionarContato(this.contato)
+        
       },
       editarContato: function (contato){
         console.log('editar selecionado ...' + contato.nome)
@@ -135,6 +149,7 @@ export default {
       },
       apagar: function (contato){
         console.log('apagar...' + contato);
+        this.contatos.pop(contato);
       },
       created: function(){
         console.log('iniciado...')
