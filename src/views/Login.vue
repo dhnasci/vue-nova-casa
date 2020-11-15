@@ -7,7 +7,7 @@
                         <v-toolbar-title>{{textos.toolbar}}</v-toolbar-title>
                     </v-toolbar>
                     <v-card-text>
-                        <v-form>
+                        <v-form> 
                             <v-text-field v-if="!isLogin"
                              prepend-icon="mdi-login"
                                 name="name"
@@ -37,7 +37,7 @@
                         <v-btn 
                           color="primary" 
                           large
-                          @click="submit"
+                          @click.prevent="submit"
                           > {{textos.toolbar}} </v-btn>
                     </v-card-actions>
                 </v-card>
@@ -47,6 +47,11 @@
 </template>
 
 <script>
+
+    import axiosmeu from './../axios'
+    import cookie from 'js-cookie'
+    import config from './../config/config'
+
 export default {
   data() { 
       return {
@@ -74,9 +79,33 @@ export default {
       this.user.password = field
         },
     submit() {
-          console.log('Usuário: ', this.user)
-      }
+        var userDto = {
+            email: this.user.email,
+            password: this.user.password
+        }
+        console.log('Usuário: ', this.user)
+        console.log('baseUrl: ' + config.apiURL)
+         
+        //axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+        axiosmeu.post(`${config.apiURL}/login`, userDto)
+            .then( response => {
+                console.log(response)
+                
+                const token = cookie.get('token')
+                console.log('token > ' + token)
 
+                
+            }, error => { 
+                if(error.status == 401) {
+                    console.log('Email ou senha inválidos!')
+                }
+                
+            })
+            .catch( error => { 
+                console.log('Erro 2: ' +  error)
+                
+            })
+      }
   }
 }
 </script>

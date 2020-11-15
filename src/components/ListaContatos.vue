@@ -99,11 +99,13 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import axios from './../axios'
 
   import config from './../config/config'
   import ListaContatosEditar from "./ListaContatosEditar.vue"
   import ListaContatosInfo from "./ListaContatosInfo.vue"
+
+  import cookie from 'js-cookie'
   
 export default {
     components: {
@@ -152,10 +154,17 @@ export default {
     },
     created() {
         console.log('iniciado...' + config.apiURL)
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + cookie.get('token')
+        console.log('token > '+ cookie.get('token'))
+
         axios.get(`${config.apiURL}/contatos`)
           .then( (response) => {
             console.log(response)
-            this.contatos = response.data
+
+            var dados = response.data
+            
+            this.contatos = dados
+
           })
       }
   }
