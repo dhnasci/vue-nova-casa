@@ -1,18 +1,24 @@
 <template>
   <v-app>
-       <v-container fill-height >
-        
-        <router-view/>
-        
-    </v-container>
+    <NavBar />
+    <v-main>
+      <v-container>
+          
+          <router-view/>
+          
+      </v-container>
+    </v-main>
+    
    
   </v-app>
 </template>
 
 <script>
+import NavBar from '@/components/NavBar'
 
 export default {
-  name: 'App'
+  name: 'App',
+  components: { NavBar },
 };
 </script>
 

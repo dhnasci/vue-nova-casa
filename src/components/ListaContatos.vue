@@ -1,22 +1,4 @@
 <template>
-  <v-app id="inspire">
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-    >
-      <v-img
-        lazy-src="http://jmessias.me/wp-content/uploads/2020/10/logocontato.png"
-        max-height="350"
-        max-width="500"
-        src="http://jmessias.me/wp-content/uploads/2020/10/logocontato.png"
-      ></v-img>
-    </v-navigation-drawer>
-
-    <v-app-bar app>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-
-      <v-toolbar-title>Lista de Contatos</v-toolbar-title>
-    </v-app-bar>
     
     <v-main>
       <v-row justify="center">
@@ -95,7 +77,7 @@
         </v-col>
       </v-row>
     </v-main>
-  </v-app>
+  
 </template>
 
 <script>

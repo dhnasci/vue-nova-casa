@@ -4,7 +4,7 @@ import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
-const Login = ( )=> import('../views/Login.vue')
+const Login = ( )=> import('@/views/Login.vue')
 const ListaContatos = ( )=> import('@/components/ListaContatos.vue')
 
 const routes = [

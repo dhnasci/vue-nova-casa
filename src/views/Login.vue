@@ -32,6 +32,12 @@
                         <v-btn block depressed
                           @click="isLogin = !isLogin"> {{textos.button}}</v-btn>
                     </v-card-text>
+                    <v-card-text>
+                        <p v-bind:class="sucesso"
+                            class="text-center font-weight-bold">
+                                {{mensagem}}
+                        </p>
+                    </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn 
@@ -60,7 +66,9 @@ export default {
             name: '',
             email: '',
             password: ''
-        }
+        },
+        mensagem: '',
+        sucesso: 'primary--text'
       }
   },
   computed:{
@@ -93,11 +101,17 @@ export default {
                 
                 const token = cookie.get('token')
                 console.log('token > ' + token)
-
+                this.mensagem = 'Usuário logado com sucesso'
+                this.sucesso = 'primary--text'
                 
             }, error => { 
-                if(error.status == 401) {
+                console.log('erro > ' + error.message)
+                var frase = error.message.split(' ')
+                var code = frase[frase.length-1];
+                if(code == 401) {
                     console.log('Email ou senha inválidos!')
+                    this.mensagem = 'Email ou senha inválidos!'
+                    this.sucesso = 'warning--text'
                 }
                 
             })
